@@ -1,0 +1,619 @@
+# 项目目录结构规范 v1.0
+
+> **目标**：建立统一的项目目录结构规范，确保新项目按标准创建目录，后续文档按规范归档，提升项目可维护性和协作效率。
+
+> **适用范围**：所有前端、后端、全栈及文档项目。
+
+---
+
+## 0. 设计原则（Meta / Design Philosophy）
+
+```yaml
+philosophy:
+  - feature_over_type           # 按功能/领域组织，而非按文件类型
+  - flat_over_deep              # 扁平优于深层嵌套
+  - explicit_over_implicit      # 显式命名优于隐式约定
+  - convention_over_creativity  # 遵循约定优于自创结构
+  - colocation_when_relevant    # 相关文件就近放置
+```
+
+**核心原则**：
+- **功能导向**：目录按业务功能/领域划分，而非按技术类型（如 `controllers/`、`services/`）
+- **扁平化**：避免超过 4 层的目录嵌套，保持结构清晰
+- **显式命名**：目录名应直接反映其内容和用途
+- **约定优先**：遵循社区约定和框架推荐结构
+- **就近原则**：组件相关的样式、测试文件与组件放在一起
+
+---
+
+## 1. 目录命名规则（Naming Conventions）
+
+### 1.1 命名格式
+
+```yaml
+naming:
+  # 标准格式
+  format: kebab-case              # 全部使用 kebab-case
+
+  # 示例
+  valid:
+    - user-profile/
+    - auth-module/
+    - api-routes/
+    - design-system/
+    - error-handling/
+
+  invalid:
+    - UserProfile/                # 禁止 PascalCase
+    - user_profile/               # 禁止 snake_case
+    - userProfile/                # 禁止 camelCase
+    - User Profile/               # 禁止空格
+```
+
+**例外情况**：
+- **React 组件目录**：如果目录仅包含单个组件及其相关文件，可使用 `PascalCase`（如 `Button/`）
+- **框架约定**：遵循框架要求（如 Next.js 的 `app/`、`pages/`）
+- **配置目录**：`.github/`、`.vscode/`、`.claude/` 等工具约定目录
+
+### 1.2 命名语义
+
+```yaml
+semantics:
+  # 功能导向命名（推荐）
+  feature_oriented:
+    - auth/                       # 认证相关
+    - user-management/            # 用户管理
+    - order-processing/           # 订单处理
+    - analytics/                  # 数据分析
+
+  # 类型导向命名（避免，除非必要）
+  type_oriented:
+    - controllers/                # 仅在需要时使用
+    - services/
+    - models/
+```
+
+### 1.3 禁止的命名模式
+
+```yaml
+disallow:
+  # 命名禁忌
+  patterns:
+    - temp/                       # 临时目录不应提交
+    - test123/                    # 无意义名称
+    - old/                        # 使用版本控制替代
+    - backup/                     # 使用版本控制替代
+    - copy/                       # 使用版本控制替代
+    - new/                        # 描述性不足
+    - final/                      # 描述性不足
+    - v1/, v2/                    # 使用 Git 标签替代
+
+  # 禁止的字符
+  characters:
+    - 中文字符                     # 使用英文（文档目录除外）
+    - 特殊字符 (!@#$%^&*)         # 仅允许字母、数字、连字符
+    - 连续连字符 (user--profile)  # 保持单个连字符
+```
+
+---
+
+## 2. 目录层级规范（Hierarchy Rules）
+
+### 2.1 最大深度
+
+```yaml
+depth:
+  # 层级限制
+  max_depth: 4                    # 最大 4 层（不含根目录）
+  recommended_depth: 3            # 推荐 3 层
+
+  # 示例（4 层）
+  example:
+    - src/
+      - features/
+        - user-profile/
+          - components/           # 第 4 层，不要再深入
+```
+
+### 2.2 何时创建子目录
+
+```yaml
+create_subdirectory:
+  # 应该创建子目录的场景
+  when:
+    - file_count_exceeds: 7       # 目录下文件超过 7 个
+    - related_files_group: true   # 存在逻辑相关的文件组
+    - reusable_module: true       # 可复用的独立模块
+    - different_concerns: true    # 不同关注点的文件混杂
+
+  # 示例
+  before:
+    components/
+      - Button.tsx
+      - ButtonStyles.css
+      - ButtonTypes.ts
+      - ButtonUtils.ts
+      - Icon.tsx
+      - IconTypes.ts
+      - Modal.tsx
+      - ModalStyles.css
+
+  after:
+    components/
+      - Button/
+        - index.tsx
+        - styles.css
+        - types.ts
+        - utils.ts
+      - Icon/
+        - index.tsx
+        - types.ts
+      - Modal/
+        - index.tsx
+        - styles.css
+```
+
+### 2.3 何时扁平化
+
+```yaml
+flatten:
+  # 应该扁平化的场景
+  when:
+    - single_file_directories: true    # 目录只包含一个文件
+    - excessive_nesting: true          # 嵌套超过 4 层
+    - low_cohesion: true               # 文件间关联度低
+    - navigation_difficulty: true      # 查找文件困难
+
+  # 示例
+  before:
+    utils/
+      - string/
+        - formatters/
+          - dateFormatter.ts          # 过深
+
+  after:
+    utils/
+      - date-formatter.ts             # 扁平化
+```
+
+### 2.4 目录合并/拆分判断标准
+
+```yaml
+merge_split:
+  # 合并条件
+  merge_when:
+    - total_files_under: 5             # 两个目录文件总数少于 5 个
+    - high_coupling: true              # 文件间高度耦合
+    - same_lifecycle: true             # 相同的修改周期
+
+  # 拆分条件
+  split_when:
+    - file_count_exceeds: 10           # 单目录文件超过 10 个
+    - mixed_responsibilities: true     # 职责混杂
+    - independent_teams: true          # 不同团队维护
+    - different_release_cycles: true   # 不同发布周期
+```
+
+---
+
+## 3. 标准目录模板（Standard Templates）
+
+### 3.1 前端项目（React/Vue/Next.js）
+
+```
+project-root/
+├── .claude/                      # Claude Code 配置
+│   ├── rules/                    # 项目级规则覆盖
+│   └── settings.json             # 项目设置
+├── .github/                      # GitHub 配置
+│   └── workflows/                # CI/CD 工作流
+├── public/                       # 静态资源
+│   └── assets/                   # 图片、字体等
+├── src/
+│   ├── app/                      # 页面路由（Next.js App Router）
+│   │   ├── (auth)/               # 路由组
+│   │   ├── api/                  # API 路由
+│   │   └── [dynamic]/            # 动态路由
+│   ├── components/               # 通用组件
+│   │   ├── ui/                   # 基础 UI 组件
+│   │   ├── forms/                # 表单组件
+│   │   └── layouts/              # 布局组件
+│   ├── features/                 # 功能模块（按业务领域）
+│   │   ├── auth/                 # 认证功能
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── services/
+│   │   │   └── types.ts
+│   │   └── user-profile/         # 用户资料功能
+│   ├── hooks/                    # 通用自定义 Hooks
+│   ├── lib/                      # 工具库
+│   │   ├── api/                  # API 客户端
+│   │   ├── utils/                # 工具函数
+│   │   └── constants/            # 常量定义
+│   ├── stores/                   # 状态管理
+│   ├── styles/                   # 全局样式
+│   └── types/                    # 全局类型定义
+├── tests/                        # 测试文件
+│   ├── unit/                     # 单元测试
+│   ├── integration/              # 集成测试
+│   └── e2e/                      # E2E 测试
+├── docs/                         # 项目文档
+│   ├── api/                      # API 文档
+│   └── guides/                   # 使用指南
+├── .env.example                  # 环境变量示例
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+### 3.2 后端项目（Node.js/Python）
+
+```
+project-root/
+├── .claude/                      # Claude Code 配置
+├── .github/
+│   └── workflows/
+├── src/
+│   ├── api/                      # API 层
+│   │   ├── routes/               # 路由定义
+│   │   ├── middleware/           # 中间件
+│   │   └── validators/           # 请求验证
+│   ├── domain/                   # 领域层（业务逻辑）
+│   │   ├── user/                 # 用户领域
+│   │   │   ├── entity.ts
+│   │   │   ├── service.ts
+│   │   │   └── repository.ts
+│   │   └── order/                # 订单领域
+│   ├── infrastructure/           # 基础设施层
+│   │   ├── database/             # 数据库配置
+│   │   ├── cache/                # 缓存配置
+│   │   └── external/             # 外部服务
+│   ├── shared/                   # 共享模块
+│   │   ├── errors/               # 错误定义
+│   │   ├── utils/                # 工具函数
+│   │   └── types/                # 类型定义
+│   └── config/                   # 配置文件
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── fixtures/                 # 测试数据
+├── scripts/                      # 脚本文件
+│   ├── migrate.ts                # 数据库迁移
+│   └── seed.ts                   # 数据填充
+├── docs/
+│   ├── api/
+│   └── architecture/             # 架构文档
+├── .env.example
+├── package.json
+└── README.md
+```
+
+### 3.3 全栈项目（Monorepo）
+
+```
+project-root/
+├── .claude/
+├── .github/
+├── apps/                         # 应用程序
+│   ├── web/                      # 前端应用
+│   │   └── (参考前端项目结构)
+│   ├── api/                      # 后端 API
+│   │   └── (参考后端项目结构)
+│   └── admin/                    # 管理后台
+├── packages/                     # 共享包
+│   ├── ui/                       # 共享 UI 组件
+│   ├── utils/                    # 共享工具
+│   ├── types/                    # 共享类型
+│   └── config/                   # 共享配置
+├── services/                     # 微服务（可选）
+│   ├── auth-service/
+│   └── notification-service/
+├── docs/
+│   ├── architecture/             # 架构文档
+│   ├── api/                      # API 文档
+│   └── guides/                   # 开发指南
+├── scripts/
+├── .env.example
+├── package.json                  # 根 package.json
+├── turbo.json                    # Turborepo 配置（或 pnpm-workspace.yaml）
+└── README.md
+```
+
+### 3.4 文档项目
+
+```
+project-root/
+├── .claude/
+├── .github/
+├── docs/                         # 主文档目录
+│   ├── 01-规范体系/              # 规范文档（允许中文编号前缀）
+│   │   ├── 01-prd-standard/      # PRD 规范
+│   │   ├── 02-design-spec/       # 设计规范
+│   │   └── 03-tech-spec/         # 技术规范
+│   ├── 02-产品文档/              # 产品文档
+│   │   ├── prds/                 # PRD 文档
+│   │   │   └── feature-name/     # 按功能组织
+│   │   └── release-notes/        # 发布说明
+│   ├── 03-技术文档/              # 技术文档
+│   │   ├── architecture/         # 架构文档
+│   │   ├── api/                  # API 文档
+│   │   └── guides/               # 开发指南
+│   ├── 04-运维文档/              # 运维文档
+│   │   ├── deployment/           # 部署文档
+│   │   └── monitoring/           # 监控文档
+│   └── assets/                   # 文档资源
+│       ├── images/               # 图片
+│       └── diagrams/             # 架构图
+├── templates/                    # 文档模板
+│   ├── prd-template.md
+│   └── tech-spec-template.md
+├── CHANGELOG.md
+└── README.md
+```
+
+---
+
+## 4. 文档归档决策树（Document Filing Decision Tree）
+
+### 4.1 决策流程图
+
+```
+新增文档
+    │
+    ├─ 产品需求 ──────────────→ docs/产品文档/prds/{feature}/
+    │
+    ├─ 设计规范 ──────────────→ docs/规范体系/design-spec/
+    │
+    ├─ 技术文档
+    │     ├─ 架构设计 ────────→ docs/技术文档/architecture/
+    │     ├─ API 文档 ────────→ docs/技术文档/api/
+    │     ├─ 开发指南 ────────→ docs/技术文档/guides/
+    │     └─ 代码映射 ────────→ docs/CODEMAPS/
+    │
+    ├─ 运维文档 ──────────────→ docs/运维文档/
+    │
+    └─ 临时文档
+          ├─ 需要版本控制 ───→ docs/drafts/
+          └─ 不需要版本控制 ──→ 本地 .gitignore 目录
+```
+
+### 4.2 文档归档对照表
+
+| 文档类型 | 归档位置 | 命名规范 | 示例 |
+|---------|---------|---------|------|
+| **PRD** | `docs/产品文档/prds/{feature}/` | `{feature}-prd.md` | `user-login-prd.md` |
+| **UI 设计规范** | `docs/规范体系/design-spec/` | `{topic}-spec.md` | `ui-component-spec.md` |
+| **技术设计** | `docs/技术文档/architecture/` | `{system}-design.md` | `auth-system-design.md` |
+| **API 文档** | `docs/技术文档/api/` | `{service}-api.md` | `user-service-api.md` |
+| **开发指南** | `docs/技术文档/guides/` | `{topic}-guide.md` | `setup-guide.md` |
+| **代码映射** | `docs/CODEMAPS/` | `{area}.md` | `frontend.md` |
+| **部署文档** | `docs/运维文档/deployment/` | `{env}-deploy.md` | `production-deploy.md` |
+| **发布说明** | `docs/产品文档/release-notes/` | `v{version}.md` | `v1.2.0.md` |
+| **会议纪要** | `docs/meeting-notes/` | `{date}-{topic}.md` | `2026-02-02-sprint-review.md` |
+| **临时草稿** | `docs/drafts/` (可 .gitignore) | `draft-{topic}.md` | `draft-new-feature.md` |
+
+### 4.3 特殊文档处理
+
+```yaml
+special_documents:
+  # 根目录文档
+  root_level:
+    - README.md                   # 项目说明（必须）
+    - CHANGELOG.md                # 变更日志
+    - CONTRIBUTING.md             # 贡献指南
+    - LICENSE                     # 开源许可
+
+  # 不应提交的文档
+  gitignore:
+    - docs/drafts/                # 草稿目录（可选择性 .gitignore）
+    - docs/personal/              # 个人笔记
+    - *.local.md                  # 本地文档
+    - NOTES.md                    # 临时笔记
+```
+
+---
+
+## 5. 目录创建时机（When to Create Directories）
+
+### 5.1 应该创建新目录
+
+```yaml
+create_directory:
+  # 新功能模块
+  new_feature:
+    trigger: "新增独立功能模块"
+    location: "src/features/{feature-name}/"
+    example: "新增支付功能 → src/features/payment/"
+
+  # 组件增长
+  component_growth:
+    trigger: "组件相关文件超过 3 个"
+    location: "src/components/{ComponentName}/"
+    example: "Button 组件有 index/styles/types/utils → src/components/Button/"
+
+  # 新文档类别
+  new_doc_category:
+    trigger: "新增文档类别"
+    location: "docs/{category}/"
+    example: "新增安全文档 → docs/security/"
+
+  # API 版本
+  api_version:
+    trigger: "API 重大版本更新"
+    location: "src/api/v{version}/"
+    example: "API v2 → src/api/v2/"
+```
+
+### 5.2 应该复用现有目录
+
+```yaml
+reuse_directory:
+  # 功能扩展
+  feature_extension:
+    scenario: "为现有功能添加新能力"
+    action: "在现有功能目录下添加文件"
+    example: "为 auth 添加 2FA → src/features/auth/two-factor.ts"
+
+  # 工具函数
+  utility_addition:
+    scenario: "添加新工具函数"
+    action: "添加到 lib/utils/"
+    example: "新格式化函数 → src/lib/utils/formatter.ts"
+
+  # 类型定义
+  type_addition:
+    scenario: "添加新类型定义"
+    action: "添加到 types/ 或功能模块的 types.ts"
+    example: "新 API 类型 → src/types/api.types.ts"
+```
+
+### 5.3 决策检查清单
+
+在创建新目录前，请确认：
+
+- [ ] 是否已有目录可以容纳这些文件？
+- [ ] 新目录是否会超过最大深度限制（4 层）？
+- [ ] 新目录名称是否符合 kebab-case 规范？
+- [ ] 新目录是否有明确的职责边界？
+- [ ] 预计会有多少文件放入这个目录？（>3 个才创建）
+- [ ] 这些文件是否有足够的内聚性？
+
+---
+
+## 6. 与其他规范的协同（Integration with Other Standards）
+
+### 6.1 与 coding-style.md 配合
+
+```yaml
+coding_style_integration:
+  # 文件大小控制
+  file_organization:
+    - "单文件 200-400 行，最多 800 行"
+    - "超过限制时拆分到子目录"
+    - "按功能模块组织，非按类型"
+
+  # 示例
+  before: |
+    # 单个 1200 行的 user.ts
+    src/services/user.ts (1200 lines)
+
+  after: |
+    # 拆分为功能模块
+    src/features/user/
+      - service.ts (300 lines)      # 核心服务
+      - repository.ts (200 lines)   # 数据访问
+      - validators.ts (150 lines)   # 验证逻辑
+      - types.ts (100 lines)        # 类型定义
+```
+
+### 6.2 与 git-workflow.md 配合
+
+```yaml
+git_workflow_integration:
+  # 提交时的目录约定
+  commit_conventions:
+    - "新目录创建应在单独 commit 中"
+    - "目录重构应有专门的 refactor commit"
+    - "移动文件时保留 Git 历史"
+
+  # 示例
+  commit_messages:
+    - "feat(auth): create auth feature module structure"
+    - "refactor(user): reorganize user module into features/"
+    - "chore: add docs/architecture directory"
+```
+
+### 6.3 与 doc-updater 代理配合
+
+```yaml
+doc_updater_integration:
+  # 代码映射目录
+  codemaps:
+    location: "docs/CODEMAPS/"
+    files:
+      - INDEX.md                  # 总览
+      - frontend.md               # 前端结构
+      - backend.md                # 后端结构
+      - database.md               # 数据库结构
+
+  # 自动更新触发
+  triggers:
+    - "目录结构变更时更新 INDEX.md"
+    - "新增功能模块时更新对应代码映射"
+```
+
+---
+
+## 7. 规范执行与验证（Enforcement & Validation）
+
+### 7.1 验证检查清单
+
+**项目初始化时**：
+- [ ] 根目录包含 README.md
+- [ ] 存在 .env.example（如需要）
+- [ ] src/ 目录结构符合模板
+- [ ] docs/ 目录已创建
+
+**添加新目录时**：
+- [ ] 目录名使用 kebab-case
+- [ ] 目录层级未超过 4 层
+- [ ] 目录有明确的职责
+- [ ] 相关文件数量 > 3
+
+**文档归档时**：
+- [ ] 文档放置在正确类别
+- [ ] 文件命名符合规范
+- [ ] 相关资源文件放在 assets/
+
+### 7.2 常见违规及修正
+
+| 违规 | 修正 |
+|------|------|
+| `UserProfile/` | `user-profile/` |
+| 5 层嵌套 | 扁平化到 4 层以内 |
+| 单文件目录 | 合并到父目录或扁平化 |
+| PRD 放在根目录 | 移动到 `docs/产品文档/prds/` |
+| `temp/` 目录提交 | 添加到 .gitignore |
+
+---
+
+## 8. 附录
+
+### 8.1 常见问题 FAQ
+
+**Q1: 何时使用中文目录名？**
+
+一般情况下使用英文。例外：
+- 纯文档项目且团队全部是中文用户
+- 使用数字编号前缀组织顺序（如 `01-规范体系/`）
+
+**Q2: 组件文件夹用 PascalCase 还是 kebab-case？**
+
+推荐 kebab-case 保持一致，但如果团队/框架习惯 PascalCase 组件目录也可接受。
+
+**Q3: 测试文件放哪里？**
+
+两种方案：
+1. **集中式**：`tests/` 目录下按类型分（推荐大型项目）
+2. **就近式**：组件目录下 `__tests__/`（推荐小型项目）
+
+**Q4: 环境变量文件怎么组织？**
+
+```
+.env.example          # 模板（提交到 Git）
+.env.local            # 本地覆盖（.gitignore）
+.env.development      # 开发环境
+.env.production       # 生产环境
+```
+
+### 8.2 参考资源
+
+- [Next.js 项目结构](https://nextjs.org/docs/getting-started/project-structure)
+- [Feature-Sliced Design](https://feature-sliced.design/)
+- [Bulletproof React](https://github.com/alan2207/bulletproof-react)
+
+---
+
+**最后更新**：2026-02-02
+**版本**：v1.0.0
+**维护者**：Vibe 团队
