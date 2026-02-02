@@ -3,7 +3,7 @@
 **基于 Everything Claude Code（通用开发规范）+ Vibe Coding 实践（产品规范），为 AI 协作开发提供完整规范。**
 
 [![GitHub](https://img.shields.io/badge/GitHub-vibe--standards-blue)](https://github.com/PANGKAIFENG/-vibe-standards-)
-![Version](https://img.shields.io/badge/version-1.3.0-green)
+![Version](https://img.shields.io/badge/version-1.4.0-green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 经过实践沉淀，整合 50+ 份通用开发规范 + 产品需求文档编写标准 + UI 设计规范，为 Claude Code 提供开箱即用的规范体系。
@@ -14,73 +14,73 @@
 
 ### 🤖 Agents（11个）
 专业助手，用于委托复杂任务：
-- **planner** - 功能实现规划
-- **architect** - 系统设计决策
-- **tdd-guide** - 测试驱动开发
-- **code-reviewer** - 代码质量和安全审查
-- **security-reviewer** - 安全漏洞分析
-- **build-error-resolver** - 构建错误修复
-- **e2e-runner** - E2E 测试（Playwright）
-- **refactor-cleaner** - 死代码清理
-- **doc-updater** - 文档更新
-- **database-reviewer** - 数据库审查
-- **spec-contributor** - 规范贡献专家（判断通用性、提交到仓库）⭐ 新增
+- **规划专家** - 功能实现规划
+- **架构专家** - 系统设计决策
+- **TDD指导** - 测试驱动开发
+- **代码审查员** - 代码质量和安全审查
+- **安全审查员** - 安全漏洞分析
+- **构建错误修复** - 构建错误修复
+- **E2E测试运行** - E2E 测试（Playwright）
+- **重构清理专家** - 死代码清理
+- **文档更新员** - 文档更新
+- **数据库审查员** - 数据库审查
+- **规范贡献专家** - 规范贡献专家（判断通用性、提交到仓库）⭐
 
 ### ⚡ Commands（16个）
 快捷命令，提升开发效率：
-- **/plan** - 创建实现计划
-- **/tdd** - 测试驱动开发
-- **/code-review** - 代码审查
-- **/e2e** - E2E 测试生成
-- **/build-fix** - 修复构建错误
-- **/refactor-clean** - 代码重构清理
-- **/orchestrate** - 多代理编排
-- **/learn** - 提取可复用模式
-- **/checkpoint** - 保存验证状态
-- **/verify** - 运行验证循环
-- **/update-docs** - 更新文档
-- **/update-codemaps** - 更新代码地图
-- **/test-coverage** - 测试覆盖率检查
-- **/eval** - 评估开发质量
-- **/setup-pm** - 配置包管理器
-- **/contribute-spec** - 贡献规范到仓库 ⭐ 新增
+- **/规划** - 创建实现计划
+- **/测试驱动开发** - 测试驱动开发
+- **/代码审查** - 代码审查
+- **/E2E测试** - E2E 测试生成
+- **/构建修复** - 修复构建错误
+- **/重构清理** - 代码重构清理
+- **/多代理编排** - 多代理编排
+- **/学习提取** - 提取可复用模式
+- **/检查点** - 保存验证状态
+- **/验证** - 运行验证循环
+- **/更新文档** - 更新文档
+- **/更新代码地图** - 更新代码地图
+- **/测试覆盖率** - 测试覆盖率检查
+- **/评估** - 评估开发质量
+- **/配置包管理器** - 配置包管理器
+- **/贡献规范** - 贡献规范到仓库 ⭐
 
 ### 🔧 Skills（14个）
 工作流定义和领域知识：
-- **coding-standards** - 通用编码标准
-- **frontend-patterns** - React/Next.js 模式
-- **backend-patterns** - API/数据库/缓存模式
-- **tdd-workflow** - TDD 方法论
-- **security-review** - 安全检查清单
-- **postgres-patterns** - PostgreSQL 最佳实践
-- **clickhouse-io** - ClickHouse 数据分析
-- **continuous-learning** - 自动提取会话模式
-- **continuous-learning-v2** - 基于直觉的学习系统
-- **iterative-retrieval** - 渐进式上下文细化
-- **strategic-compact** - 手动上下文压缩
-- **eval-harness** - 评估框架
-- **verification-loop** - 持续验证
-- **project-guidelines-example** - 项目指南示例
+- **编码标准** - 通用编码标准
+- **前端模式** - React/Next.js 模式
+- **后端模式** - API/数据库/缓存模式
+- **TDD工作流** - TDD 方法论
+- **安全审查** - 安全检查清单
+- **PostgreSQL模式** - PostgreSQL 最佳实践
+- **ClickHouse数据分析** - ClickHouse 数据分析
+- **持续学习** - 自动提取会话模式
+- **持续学习V2** - 基于直觉的学习系统
+- **渐进式检索** - 渐进式上下文细化
+- **策略压缩** - 手动上下文压缩
+- **评估框架** - 评估框架
+- **验证循环** - 持续验证
+- **项目指南示例** - 项目指南示例
 
 ### 📋 Rules（11个）
 始终遵循的全局规则：
-- **01-requirement-prd-standard** - PRD 生成规范（产品需求文档）⭐
-- **02-design-ui-spec** - UI 设计规范（设计系统、组件规范）⭐
-- **03-directory-structure** - 项目目录结构规范（目录命名、文档归档）⭐ 新增
-- **agents** - 代理编排规则
-- **git-workflow** - Git 工作流和提交规范
-- **coding-style** - 编码风格（不可变性、文件组织）
-- **testing** - 测试要求（TDD、80% 覆盖率）
-- **security** - 安全检查（OWASP Top 10）
-- **performance** - 性能优化（模型选择、上下文管理）
-- **patterns** - 通用开发模式
-- **hooks** - Hooks 系统使用
+- **01-PRD需求规范** - PRD 生成规范（产品需求文档）⭐
+- **02-UI设计规范** - UI 设计规范（设计系统、组件规范）⭐
+- **03-目录结构规范** - 项目目录结构规范（目录命名、文档归档）⭐
+- **代理编排规则** - 代理编排规则
+- **Git工作流** - Git 工作流和提交规范
+- **编码风格** - 编码风格（不可变性、文件组织）
+- **测试规范** - 测试要求（TDD、80% 覆盖率）
+- **安全规范** - 安全检查（OWASP Top 10）
+- **性能优化** - 性能优化（模型选择、上下文管理）
+- **通用模式** - 通用开发模式
+- **Hooks系统** - Hooks 系统使用
 
 ### 👤 Contexts（3个）
 角色上下文切换：
-- **dev** - 开发者模式
-- **review** - 审查模式
-- **research** - 研究模式
+- **开发者模式** - 开发者模式
+- **审查模式** - 审查模式
+- **研究模式** - 研究模式
 
 ---
 
@@ -121,8 +121,8 @@ cp -r contexts ~/.claude/contexts/
 在 Claude Code 中使用规范：
 ```bash
 # 使用命令
-/plan  # 创建实现计划
-/tdd   # 测试驱动开发
+/规划  # 创建实现计划
+/测试驱动开发   # 测试驱动开发
 
 # 代理会自动加载
 # 规则会自动应用
@@ -140,24 +140,24 @@ cp -r contexts ~/.claude/contexts/
 - **安全优先**：OWASP Top 10、secrets 管理
 - **Git 规范**：约定式提交、PR 工作流
 
-### ✅ 产品规范（新增）
+### ✅ 产品规范
 - **PRD 编写标准**：8 大章节模板
 - **用户场景**：真实场景 + 用户诉求
 - **界面布局**：ASCII/Mermaid 图 + UI Mockup
 - **操作流程**：正常路径 + 异常处理
 
-### ✅ 设计规范（v1.1 新增）⭐
+### ✅ 设计规范
 - **设计系统**：颜色、字体、间距、圆角、阴影、动效
 - **交互语义**：弹窗、破坏性操作、反馈机制、下拉选择
 - **组件规范**：按钮、输入框、弹窗组件的使用规范
 - **布局模式**：列表页、表单页、详情页的标准布局
 
 ### ✅ 专业代理团队
-- **规划 + 设计**：planner + architect
-- **开发 + 测试**：tdd-guide + code-reviewer
-- **安全 + 性能**：security-reviewer + database-reviewer
-- **维护 + 文档**：refactor-cleaner + doc-updater
-- **规范贡献**：spec-contributor（v1.2 新增）⭐
+- **规划 + 设计**：规划专家 + 架构专家
+- **开发 + 测试**：TDD指导 + 代码审查员
+- **安全 + 性能**：安全审查员 + 数据库审查员
+- **维护 + 文档**：重构清理专家 + 文档更新员
+- **规范贡献**：规范贡献专家 ⭐
 
 ---
 
@@ -165,7 +165,7 @@ cp -r contexts ~/.claude/contexts/
 
 - **原始仓库**：[Everything Claude Code](https://github.com/affaan-m/everything-claude-code)
 - **项目实践**：基于"新白板"项目的 Vibe Coding 工作流
-- **PRD 规范**：[rules/01-requirement-prd-standard.md](rules/01-requirement-prd-standard.md)
+- **PRD 规范**：[rules/01-PRD需求规范.md](rules/01-PRD需求规范.md)
 
 ---
 
@@ -204,8 +204,17 @@ MIT License
 
 ## 📝 版本历史
 
-### v1.3.0（2026-02-02）⭐ 最新版本
-- ✅ **新增项目目录结构规范**（rules/03-directory-structure.md）
+### v1.4.0（2026-02-02）⭐ 最新版本
+- ✅ **文件名全部改为中文**
+  - agents/：规划专家.md、代码审查员.md 等 11 个文件
+  - commands/：规划.md、验证.md 等 16 个文件
+  - rules/：01-PRD需求规范.md、编码风格.md 等 11 个文件
+  - contexts/：开发者模式.md、审查模式.md、研究模式.md
+  - skills/：编码标准/、前端模式/ 等 14 个目录
+- ✅ **更新规范贡献专家**：支持中文文件命名规范
+
+### v1.3.0（2026-02-02）
+- ✅ **新增项目目录结构规范**（rules/03-目录结构规范.md）
   - 目录命名规则：kebab-case 格式、禁止的命名模式
   - 目录层级规范：最大 4 层、创建/扁平化时机
   - 标准目录模板：前端/后端/全栈/文档项目
@@ -214,15 +223,15 @@ MIT License
 
 ### v1.2.0（2026-02-02）
 - ✅ **新增规范贡献助手**
-  - 新增 `spec-contributor` 代理：判断规范通用性、检查重复性、决定分类
-  - 新增 `/contribute-spec` 命令：贡献规范到仓库的入口
+  - 新增 `规范贡献专家` 代理：判断规范通用性、检查重复性、决定分类
+  - 新增 `/贡献规范` 命令：贡献规范到仓库的入口
   - 通用性评分（0-100）：高度通用 / 需改造 / 边界情况 / 项目特定
   - 自动重复性检查：搜索 rules/skills/agents/commands
   - 改造建议：参数化、泛化、分层
   - 协助提交：创建分支、写入文件、创建 PR
 
 ### v1.1.0（2026-02-02）
-- ✅ **新增 UI 设计规范**（rules/02-design-ui-spec.md）
+- ✅ **新增 UI 设计规范**（rules/02-UI设计规范.md）
   - 设计令牌（Design Tokens）：颜色、字体、间距、圆角、阴影、动效
   - 交互语义：弹窗、破坏性操作、反馈机制、下拉选择
   - 组件规范：按钮、输入框、弹窗组件
