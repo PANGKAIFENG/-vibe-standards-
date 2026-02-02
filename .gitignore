@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+COMPLETE_CONFIG_GUIDE.md
+EVERYTHING_CLAUDE_CODE_SCAN_REPORT.md
+PM_VIBE_CODING_GUIDE.md
+已有doc规范/
+
+# Source repositories (do not commit)
+everything-claude-code/
