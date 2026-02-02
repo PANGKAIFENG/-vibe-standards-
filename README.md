@@ -3,10 +3,10 @@
 **基于 Everything Claude Code（通用开发规范）+ Vibe Coding 实践（产品规范），为 AI 协作开发提供完整规范。**
 
 [![GitHub](https://img.shields.io/badge/GitHub-vibe--standards-blue)](https://github.com/PANGKAIFENG/-vibe-standards-)
-![Version](https://img.shields.io/badge/version-1.0.0-green)
+![Version](https://img.shields.io/badge/version-1.1.0-green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-经过实践沉淀，整合 50+ 份通用开发规范 + 产品需求文档编写标准，为 Claude Code 提供开箱即用的规范体系。
+经过实践沉淀，整合 50+ 份通用开发规范 + 产品需求文档编写标准 + UI 设计规范，为 Claude Code 提供开箱即用的规范体系。
 
 ---
 
@@ -60,9 +60,10 @@
 - **verification-loop** - 持续验证
 - **project-guidelines-example** - 项目指南示例
 
-### 📋 Rules（9个）
+### 📋 Rules（10个）
 始终遵循的全局规则：
-- **01-requirement-prd-standard** - PRD 生成规范（新增⭐）
+- **01-requirement-prd-standard** - PRD 生成规范（产品需求文档）⭐
+- **02-design-ui-spec** - UI 设计规范（设计系统、组件规范）⭐ 新增
 - **agents** - 代理编排规则
 - **git-workflow** - Git 工作流和提交规范
 - **coding-style** - 编码风格（不可变性、文件组织）
@@ -142,6 +143,12 @@ cp -r contexts ~/.claude/contexts/
 - **界面布局**：ASCII/Mermaid 图 + UI Mockup
 - **操作流程**：正常路径 + 异常处理
 
+### ✅ 设计规范（v1.1 新增）⭐
+- **设计系统**：颜色、字体、间距、圆角、阴影、动效
+- **交互语义**：弹窗、破坏性操作、反馈机制、下拉选择
+- **组件规范**：按钮、输入框、弹窗组件的使用规范
+- **布局模式**：列表页、表单页、详情页的标准布局
+
 ### ✅ 专业代理团队
 - **规划 + 设计**：planner + architect
 - **开发 + 测试**：tdd-guide + code-reviewer
@@ -192,6 +199,16 @@ MIT License
 ---
 
 ## 📝 版本历史
+
+### v1.1.0（2026-02-02）⭐ 最新版本
+- ✅ **新增 UI 设计规范**（rules/02-design-ui-spec.md）
+  - 设计令牌（Design Tokens）：颜色、字体、间距、圆角、阴影、动效
+  - 交互语义：弹窗、破坏性操作、反馈机制、下拉选择
+  - 组件规范：按钮、输入框、弹窗组件
+  - 布局模式：列表页、表单页、详情页
+  - 文案规范：确认弹窗、成功提示、错误提示
+  - 规范演进：版本管理、项目定制指南
+- ✅ 完善规范体系：产品规范 + 设计规范 + 开发规范
 
 ### v1.0.0（2026-02-02）
 - ✅ 整合 Everything Claude Code 所有翻译内容（50+ 文件）
